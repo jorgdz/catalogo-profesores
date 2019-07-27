@@ -28,7 +28,7 @@ public class CursosServiceImpl implements CursosService{
 	}
 
 	@Override
-	public void deleteCursos(Long idCurso) {
+	public void deleteCursos(int idCurso) {
 		_cursodao.deleteCursos(idCurso);
 	}
 
@@ -38,7 +38,7 @@ public class CursosServiceImpl implements CursosService{
 	}
 
 	@Override
-	public Cursos findById(Long idCurso) {
+	public Cursos findById(int idCurso) {
 		return _cursodao.findById(idCurso);
 	}
 
@@ -48,7 +48,7 @@ public class CursosServiceImpl implements CursosService{
 	}
 
 	@Override
-	public List<Cursos> findByIdProfesor(Long idProfesor) {
+	public List<Cursos> findByIdProfesor(int idProfesor) {
 		return _cursodao.findByIdProfesor(idProfesor);
 	}
 

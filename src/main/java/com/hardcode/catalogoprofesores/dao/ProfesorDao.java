@@ -10,11 +10,11 @@ public interface ProfesorDao {
 	
 	List<Profesor>findAllProfesors();
 	
-	void deleteProfesorById(Long idProfesor);
+	void deleteProfesorById(int idProfesor);
 	
 	void updateProfesor(Profesor profesor);
 	
-	Profesor findById(Long idProfesor);
+	Profesor findById(int idProfesor);
 	
 	Profesor findByName(String nombre);
 	

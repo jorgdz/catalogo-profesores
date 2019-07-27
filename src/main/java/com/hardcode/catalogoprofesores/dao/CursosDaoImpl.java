@@ -23,7 +23,7 @@ public class CursosDaoImpl extends AbstractSession implements CursosDao{
 	}
 
 	@Override
-	public void deleteCursos(Long idCurso) {
+	public void deleteCursos(int idCurso) {
 		Cursos curso = findById(idCurso);
 		if(curso != null){
 			getSession().delete(curso);
@@ -36,7 +36,7 @@ public class CursosDaoImpl extends AbstractSession implements CursosDao{
 	}
 
 	@Override
-	public Cursos findById(Long idCurso) {	
+	public Cursos findById(int idCurso) {	
 		return (Cursos)getSession().get(Cursos.class,idCurso);
 	}
 
@@ -48,10 +48,11 @@ public class CursosDaoImpl extends AbstractSession implements CursosDao{
 	}
 		
 	@Override
-	public List<Cursos> findByIdProfesor(Long id_profesor) {
+	public List<Cursos> findByIdProfesor(int id_profesor) {
 		return (List<Cursos>)getSession().createQuery(
 				"from Cursos c join c.profesor p where p.id_profesor = :id_profesor")
-				.setParameter("id_profesor", id_profesor).list();
+				.setParameter("id_profesor", id_profesor)
+				.list();
 	}
 	
 }

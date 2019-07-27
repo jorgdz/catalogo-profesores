@@ -29,12 +29,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/v1")
+@CrossOrigin
 public class ProfesorController {
 	
 	@Autowired
@@ -67,8 +69,8 @@ public class ProfesorController {
 	
 	//GET ID
 	@RequestMapping(value="/profesores/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ResponseEntity<Profesor>getProfesoresById(@PathVariable("id") Long idProfesores){
-		if(idProfesores == null || idProfesores <= 0){
+	public ResponseEntity<Profesor>getProfesoresById(@PathVariable("id") int idProfesores){
+		if(idProfesores <= 0){
 			return new ResponseEntity(new CustomErrorType("El Id de los profesores no es correcto"), HttpStatus.CONFLICT);
 		}
 		Profesor profe = _profesor.findById(idProfesores);
@@ -95,9 +97,9 @@ public class ProfesorController {
 	
 	//DELETE
 	@RequestMapping(value="/profesores/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public ResponseEntity<?>deleteProfesores(@PathVariable("id") Long id){
+	public ResponseEntity<?>deleteProfesores(@PathVariable("id") int id){
 		
-		if(id <= 0 || id == null){
+		if(id <= 0){
 			return new ResponseEntity(new CustomErrorType("Debe ingresar un ID"), HttpStatus.CONFLICT);
 		}
 		
@@ -115,8 +117,8 @@ public class ProfesorController {
 	public static final String PROFESOR_UPLOADED_FOLDER = "images/profesores/";
 	
 	@RequestMapping(value="/profesores/images", method=RequestMethod.POST, headers=("content-type=multipart/form-data"))
-	public ResponseEntity<byte[]> uploadProfesorImage(@RequestParam("id_profesor") Long idProfesor, @RequestParam("file") MultipartFile multipartfile, UriComponentsBuilder ucBuilder){
-		if(idProfesor == null){
+	public ResponseEntity<byte[]> uploadProfesorImage(@RequestParam("id_profesor") int idProfesor, @RequestParam("file") MultipartFile multipartfile, UriComponentsBuilder ucBuilder){
+		if(idProfesor <= 0){
 			return new ResponseEntity(new CustomErrorType("Id del profesor es requerido "), HttpStatus.NO_CONTENT);
 		}
 		
@@ -162,8 +164,8 @@ public class ProfesorController {
 	
 	//GET IMAGE
 	@RequestMapping(value="/profesores/{id_profesor}/images", method=RequestMethod.GET)
-	public ResponseEntity<byte[]> getProfesoresImage(@PathVariable("id_profesor") Long idProfesor){
-		if(idProfesor == null){
+	public ResponseEntity<byte[]> getProfesoresImage(@PathVariable("id_profesor") int idProfesor){
+		if(idProfesor <= 0){
 			return new ResponseEntity(new CustomErrorType("Id del profesor es requerido "), HttpStatus.NO_CONTENT);
 		}
 		
@@ -192,8 +194,8 @@ public class ProfesorController {
 	
 	//DELETE IMAGE
 	@RequestMapping(value="/profesores/{id_profesor}/images", method=RequestMethod.DELETE, headers="Accept=application/json")
-	public ResponseEntity<?> deleteProfesorImage(@PathVariable("id_profesor") Long idProfesor){
-		if(idProfesor == null){
+	public ResponseEntity<?> deleteProfesorImage(@PathVariable("id_profesor") int idProfesor){
+		if(idProfesor <= 0){
 			return new ResponseEntity(new CustomErrorType("Id del profesor es requerido "), HttpStatus.NO_CONTENT);
 		}
 		
@@ -223,25 +225,30 @@ public class ProfesorController {
 	//RELACIÓN DE RECURSOS 1 PROFESOR TIENE MUCHAS REDES SOCIALES
 	@RequestMapping(value="profesores/redesSocial", method=RequestMethod.PATCH, headers="Accept=application/json")
 	public ResponseEntity<?> assignProfesorRedesSociales(@RequestBody Profesor profe, UriComponentsBuilder uriComponentBuilder){
+		Integer idProfe = new Integer(profe.getId_profesor());
 		
-		if(profe.getId_profesor()==null){
+		if(idProfe == null || idProfe <= 0)
+		{
 			return new ResponseEntity(new CustomErrorType("Se necesita el ID del profesor, ID de red social y nickname"), HttpStatus.NOT_FOUND);
 		}
 		
-		Profesor profeSave = _profesor.findById(profe.getId_profesor());
-		if(profeSave ==null){
-			return new ResponseEntity(new CustomErrorType("ID de profesor "+profe.getId_profesor()+" no se encontró"), HttpStatus.NOT_FOUND);
+		Profesor profeSave = _profesor.findById(idProfe);
+		if(profeSave == null)
+		{
+			return new ResponseEntity(new CustomErrorType("ID de profesor "+idProfe+" no se encontró"), HttpStatus.NOT_FOUND);
 		}
 
-		if(profe.getProfesorRedesSociales().size() == 0){
-			return new ResponseEntity(new CustomErrorType("Necesitamos el ID del profesor, ID de red social y NICKNAME "+profe.getId_profesor()+" no se encontró"), HttpStatus.NOT_FOUND);
-		}else{
+		if(profe.getProfesorRedesSociales().size() == 0)
+		{
+			return new ResponseEntity(new CustomErrorType("Necesitamos el ID del profesor, ID de red social y NICKNAME "+idProfe+" no se encontró"), HttpStatus.NOT_FOUND);
+		}
+		else{
 			
 			Iterator<ProfesorRedesSociales> i = profe.getProfesorRedesSociales().iterator();
 		
 			while(i.hasNext()){
 				ProfesorRedesSociales profesorRedesSocial = i.next();			
-				if(profesorRedesSocial.getRedes().getId_red_social() == null || profesorRedesSocial.getNick_name() == null){
+				if(profesorRedesSocial.getRedes().getId_red_social() <= 0 || profesorRedesSocial.getNick_name() == null){
 					
 					return new ResponseEntity(new CustomErrorType("Error: necesitamos el ID del profesor, ID de red social y nickname"), HttpStatus.NOT_FOUND);
 				

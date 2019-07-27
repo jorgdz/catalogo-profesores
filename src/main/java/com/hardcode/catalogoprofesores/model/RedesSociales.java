@@ -21,7 +21,7 @@ public class RedesSociales implements Serializable{
 	@Id
 	@Column(name="id_red_social")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id_red_social;
+	private int id_red_social;
 	
 	@Column(name="nombre_red_social")
 	private String nombre_red_social;
@@ -44,11 +44,11 @@ public class RedesSociales implements Serializable{
 		this.icono = icono;
 	}
 
-	public Long getId_red_social() {
+	public int getId_red_social() {
 		return id_red_social;
 	}
 
-	public void setId_red_social(Long id_red_social) {
+	public void setId_red_social(int id_red_social) {
 		this.id_red_social = id_red_social;
 	}
 

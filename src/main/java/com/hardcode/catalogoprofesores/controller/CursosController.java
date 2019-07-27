@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import com.hardcode.catalogoprofesores.util.CustomErrorType;
 
 @Controller
 @RequestMapping("/v1")
+@CrossOrigin
 public class CursosController {
 	
 	@Autowired
@@ -33,24 +35,28 @@ public class CursosController {
 	
 	//GET
 	@RequestMapping(value="/cursos",method = RequestMethod.GET, headers="Accept=Application/json")
-	public ResponseEntity<List<Cursos>>getAllCursos(@RequestParam(value="name", required=false) String name, @RequestParam(value="id_profesor", required=false) Long id_profesor){
+	public ResponseEntity<List<Cursos>>getAllCursos(@RequestParam(value="name", required=false) String name, @RequestParam(value="id_profesor", required=false) Integer id_profesor){
 		List<Cursos> cursos = new ArrayList<>();
-		if(id_profesor!=null){
+				
+		if(id_profesor != null)
+		{
 			cursos = _cursos.findByIdProfesor(id_profesor);
 			if(cursos.isEmpty()){
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
 			}
 		}
 		
-		if(name!=null){
+		if(name != null)
+		{
 			Cursos curso = _cursos.findByName(name);
 			if(curso == null){
 				return new ResponseEntity(HttpStatus.NOT_FOUND);
+			}
+			cursos.add(curso);		
 		}
-			cursos.add(curso);
-			
-		}
-		if(name == null && id_profesor == null){
+		
+		if(name == null && id_profesor == null)
+		{
 			cursos = _cursos.findAllCursos();
 			if(cursos.isEmpty()){
 				return new ResponseEntity(HttpStatus.NO_CONTENT);
@@ -62,7 +68,7 @@ public class CursosController {
 
 	//GET ID
 	@RequestMapping(value="/cursos/{id}", method=RequestMethod.GET, headers="Accept=Application/json")
-	public ResponseEntity<Cursos> getCursosById(@PathVariable("id") Long id){
+	public ResponseEntity<Cursos> getCursosById(@PathVariable("id") int id){
 		Cursos cursos = _cursos.findById(id);
 		if(cursos == null){
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -84,7 +90,7 @@ public class CursosController {
 	
 	//UPDATE
 	@RequestMapping(value="/cursos/{id}", method=RequestMethod.PATCH, headers="Accept=Application/json")
-	public ResponseEntity<?>updateCurso(@PathVariable("id") Long id, @RequestBody Cursos cursos){
+	public ResponseEntity<?>updateCurso(@PathVariable("id") int id, @RequestBody Cursos cursos){
 		Cursos currentCurso = _cursos.findById(id);
 		if(currentCurso == null){
 			return new ResponseEntity(new CustomErrorType("Este curso no existe"), HttpStatus.NOT_FOUND);
@@ -99,7 +105,7 @@ public class CursosController {
 	
 	//DELETE
 	@RequestMapping(value="/cursos/{id}", method=RequestMethod.DELETE, headers="Accept=Application/json")
-	public ResponseEntity<?>deleteCursos(@PathVariable("id") Long id){
+	public ResponseEntity<?>deleteCursos(@PathVariable("id") int id){
 		Cursos cursos = _cursos.findById(id);
 		if(cursos == null){
 			return new ResponseEntity(new CustomErrorType("Este curso no existe"), HttpStatus.NOT_FOUND);
@@ -111,7 +117,7 @@ public class CursosController {
 	//ASIGNAR UN PROFESOR A UN CURSO
 	@RequestMapping(value="cursos/profesores", method=RequestMethod.PATCH, headers="Accept=Application/json")
 	public ResponseEntity<Cursos> asignarProfesorCurso(@RequestBody Cursos cursos, UriComponentsBuilder ucBuilder){
-		if(cursos.getId_curso() ==null || cursos.getProfesor().getId_profesor() == null){
+		if(cursos.getId_curso() <= 0 || cursos.getProfesor().getId_profesor() <= 0){
 			return new ResponseEntity(new CustomErrorType("Se necesita el ID del curso y del profesor"), HttpStatus.NOT_FOUND);
 		}
 		Cursos cursoSave =_cursos.findById(cursos.getId_curso());

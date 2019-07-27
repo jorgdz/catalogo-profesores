@@ -22,7 +22,7 @@ public class Profesor implements Serializable{
 	@Id
 	@Column(name="id_profesor")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id_profesor;
+	private int id_profesor;
 	
 	@Column(name="nombre")
 	private String nombre;
@@ -48,10 +48,10 @@ public class Profesor implements Serializable{
 		this.avatar = avatar;
 	}
 	
-	public Long getId_profesor() {
+	public int getId_profesor() {
 		return id_profesor;
 	}
-	public void setId_profesor(Long id_profesor) {
+	public void setId_profesor(int id_profesor) {
 		this.id_profesor = id_profesor;
 	}
 	public String getNombre() {

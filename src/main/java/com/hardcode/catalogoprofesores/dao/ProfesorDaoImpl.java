@@ -22,7 +22,7 @@ public class ProfesorDaoImpl extends AbstractSession implements ProfesorDao{
 		return getSession().createQuery("from Profesor").list();
 	}
 
-	public void deleteProfesorById(Long idProfesor) {
+	public void deleteProfesorById(int idProfesor) {
 		Profesor profesor = findById(idProfesor);
 		if(profesor != null){
 			
@@ -43,7 +43,7 @@ public class ProfesorDaoImpl extends AbstractSession implements ProfesorDao{
 		getSession().update(profesor);
 	}
 
-	public Profesor findById(Long idProfesor) {		
+	public Profesor findById(int idProfesor) {		
 		return (Profesor)getSession().get(Profesor.class, idProfesor);
 	}
 

@@ -29,16 +29,22 @@ public class DataBaseConfiguration {
 	@Bean
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/sistema_profesores");
+		dataSource.setUsername("postgres");
+		dataSource.setPassword("admin");
+		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/sistema_profesores");
 		dataSource.setUsername("sistema_profesores");
-		dataSource.setPassword("p@ssw0rd");
+		dataSource.setPassword("p@ssw0rd");*/
+		
 		return dataSource;
 	}
 	
 	public Properties hibernateProperties(){
 		Properties properties = new Properties();
-		properties.put("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+		//properties.put("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+		properties.put("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect");
 		properties.put("show_sql","true");
 		
 		return properties;

@@ -24,12 +24,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/v1")
+@CrossOrigin
 public class RedesSocialesController {
 	
 	@Autowired
@@ -61,8 +63,8 @@ public class RedesSocialesController {
 	
 	//GET ID
 	@RequestMapping(value="/redesSocial/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public ResponseEntity<RedesSociales> getRedSocialId(@PathVariable("id") Long idRedSocial){
-		if(idRedSocial == null || idRedSocial <= 0){
+	public ResponseEntity<RedesSociales> getRedSocialId(@PathVariable("id") int idRedSocial){
+		if(idRedSocial <= 0){
 			return new ResponseEntity(new CustomErrorType("ID de la red social es requerido"), HttpStatus.CONFLICT);
 		}
 		
@@ -96,9 +98,9 @@ public class RedesSocialesController {
 	//Update
 	
 	@RequestMapping(value="/redesSocial/{id}", method = RequestMethod.PATCH, headers = "Accept=application/json")
-	public ResponseEntity<?>updateRedesSocial(@PathVariable("id") Long idRedSocial, @RequestBody RedesSociales redSocial){
+	public ResponseEntity<?>updateRedesSocial(@PathVariable("id") int idRedSocial, @RequestBody RedesSociales redSocial){
 		
-		if(idRedSocial == null || idRedSocial <= 0){
+		if(idRedSocial <= 0){
 			return new ResponseEntity(new CustomErrorType("ID de la red social es requerido"), HttpStatus.CONFLICT);
 		}
 		
@@ -116,8 +118,8 @@ public class RedesSocialesController {
 	
 	//DELETE
 	@RequestMapping(value="/redesSocial/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
-	public ResponseEntity<?>deleteRedSocial(@PathVariable("id") Long idRedSocial){
-		if(idRedSocial == null || idRedSocial <= 0){
+	public ResponseEntity<?>deleteRedSocial(@PathVariable("id") int idRedSocial){
+		if(idRedSocial <= 0){
 			return new ResponseEntity(new CustomErrorType("ID de la red social es requerido"), HttpStatus.CONFLICT);
 		}
 		
@@ -133,9 +135,9 @@ public class RedesSocialesController {
 	public static final String RED_SOCIAL_UPLOADER_FOLDER="images/red_social/";
 	//SUBIR ICONO DE REDES SOCIALES
 	@RequestMapping(value="/redesSocial/images", method = RequestMethod.POST, headers=("content-type=multipart/form-data"))
-	public ResponseEntity<byte[]>uploadRedesSocialImage(@RequestParam("id_red_social") Long idRedSocial, @RequestParam("file") MultipartFile multipartFile, UriComponentsBuilder ucBuilder){
-		if(idRedSocial == null){
-			return new ResponseEntity(new CustomErrorType("Por ingrese el ID de la red social a modificar"), HttpStatus.NO_CONTENT);
+	public ResponseEntity<byte[]>uploadRedesSocialImage(@RequestParam("id") Integer idRedSocial, @RequestParam("file") MultipartFile multipartFile, UriComponentsBuilder ucBuilder){
+		if(idRedSocial == null || idRedSocial <= 0){
+			return new ResponseEntity(new CustomErrorType("Por favor ingrese el ID de la red social a modificar"), HttpStatus.NO_CONTENT);
 		}
 		
 		if(multipartFile.isEmpty()){

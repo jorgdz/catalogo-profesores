@@ -34,12 +34,12 @@ public class RedesSocialServiceImpl implements RedesSocialService{
 	}
 
 	@Override
-	public void deleteRedesSociales(Long idRedes) {
+	public void deleteRedesSociales(int idRedes) {
 		_redesSocial.deleteRedesSociales(idRedes);
 	}
 
 	@Override
-	public RedesSociales findById(Long idRedes) {	
+	public RedesSociales findById(int idRedes) {	
 		return _redesSocial.findById(idRedes);
 	}
 
@@ -49,12 +49,12 @@ public class RedesSocialServiceImpl implements RedesSocialService{
 	}
 
 	@Override
-	public ProfesorRedesSociales findByIdRedByIdAndNombre(Long id_red_social, String NickName) {
+	public ProfesorRedesSociales findByIdRedByIdAndNombre(int id_red_social, String NickName) {
 		return _redesSocial.findByIdRedByIdAndNombre(id_red_social, NickName);
 	}
 
 	@Override
-	public ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(Long idProfesor, Long idRedSocial) {
+	public ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(int idProfesor, int idRedSocial) {
 		return _redesSocial.findRedesSocialByIdProfesorAndIdRedSocial(idProfesor, idRedSocial);
 	}
 

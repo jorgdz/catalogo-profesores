@@ -13,13 +13,13 @@ public interface RedesSocialesDao {
 	
 	void updateRedesSociales(RedesSociales redes);
 	
-	void deleteRedesSociales(Long idRedes);
+	void deleteRedesSociales(int idRedes);
 	
-	RedesSociales findById(Long idRedes);
+	RedesSociales findById(int idRedes);
 	
 	RedesSociales findByName(String nombre_red_social);
 	
-	ProfesorRedesSociales findByIdRedByIdAndNombre(Long id_red_social, String nick_name);
+	ProfesorRedesSociales findByIdRedByIdAndNombre(int id_red_social, String nick_name);
 	
-	ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(Long idProfesor, Long idRedSocial);
+	ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(int idProfesor, int idRedSocial);
 }

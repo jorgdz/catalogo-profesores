@@ -10,13 +10,13 @@ public interface CursosDao {
 	
 	List<Cursos>findAllCursos();
 	
-	void deleteCursos(Long idCurso);
+	void deleteCursos(int idCurso);
 	
 	void updateCursos(Cursos curso);
 	
-	Cursos findById(Long idCurso);
+	Cursos findById(int idCurso);
 	
 	Cursos findByName(String nombre);
 	
-	List<Cursos>findByIdProfesor(Long idProfesor);
+	List<Cursos>findByIdProfesor(int idProfesor);
 }

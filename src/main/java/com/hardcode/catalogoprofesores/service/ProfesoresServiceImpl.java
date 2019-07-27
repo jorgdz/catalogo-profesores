@@ -28,7 +28,7 @@ public class ProfesoresServiceImpl implements ProfesoresService{
 	}
 
 	@Override
-	public void deleteProfesorById(Long idProfesor) {
+	public void deleteProfesorById(int idProfesor) {
 		_profesordao.deleteProfesorById(idProfesor);
 	}
 
@@ -38,7 +38,7 @@ public class ProfesoresServiceImpl implements ProfesoresService{
 	}
 
 	@Override
-	public Profesor findById(Long idProfesor) {
+	public Profesor findById(int idProfesor) {
 		return _profesordao.findById(idProfesor);
 	}
 

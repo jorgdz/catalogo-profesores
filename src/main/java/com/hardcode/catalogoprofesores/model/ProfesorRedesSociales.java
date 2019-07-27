@@ -21,7 +21,7 @@ public class ProfesorRedesSociales implements Serializable{
 	@Id
 	@Column(name="id_profesor_red_social")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id_profesor_red_social;
+	private int id_profesor_red_social;
 	
 	@Column(name="nick_name")
 	private String nick_name;
@@ -47,11 +47,11 @@ public class ProfesorRedesSociales implements Serializable{
 		this.nick_name = nickname;
 	}
 
-	public Long getId_profesor_red_social() {
+	public int getId_profesor_red_social() {
 		return id_profesor_red_social;
 	}
 
-	public void setId_profesor_red_social(Long id_profesor_red_social) {
+	public void setId_profesor_red_social(int id_profesor_red_social) {
 		this.id_profesor_red_social = id_profesor_red_social;
 	}
 

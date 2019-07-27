@@ -29,7 +29,7 @@ public class RedesSocialesDaoImpl extends AbstractSession implements RedesSocial
 	}
 
 	@Override
-	public void deleteRedesSociales(Long idRedes) {
+	public void deleteRedesSociales(int idRedes) {
 		RedesSociales rs = findById(idRedes);
 		if(rs != null){
 			getSession().delete(rs);
@@ -37,7 +37,7 @@ public class RedesSocialesDaoImpl extends AbstractSession implements RedesSocial
 	}
 
 	@Override
-	public RedesSociales findById(Long idRedes) {
+	public RedesSociales findById(int idRedes) {
 		return (RedesSociales)getSession().get(RedesSociales.class, idRedes);
 	}
 
@@ -48,12 +48,12 @@ public class RedesSocialesDaoImpl extends AbstractSession implements RedesSocial
 	}
 
 	@Override
-	public ProfesorRedesSociales findByIdRedByIdAndNombre(Long id_red_social, String nick_name) {
+	public ProfesorRedesSociales findByIdRedByIdAndNombre(int id_red_social, String nick_name) {
 		List<Object[]> objects = getSession().createQuery(
 				"from ProfesorRedesSociales prs join prs.redes r where r.id_red_social = :id_red_social and prs.nick_name = :nick_name")
 				.setParameter("id_red_social",id_red_social)
 				.setParameter("nick_name", nick_name).list();
-		if (objects.size()>0) {
+		if (objects.size() > 0) {
 			for(Object[] objects2 : objects){
 				for(Object object: objects2){
 					if (object instanceof ProfesorRedesSociales) {
@@ -69,7 +69,7 @@ public class RedesSocialesDaoImpl extends AbstractSession implements RedesSocial
 	
 	//RELACIÓN DE RECURSOS	
 	@Override
-	public ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(Long idProfesor, Long idRedSocial) {
+	public ProfesorRedesSociales findRedesSocialByIdProfesorAndIdRedSocial(int idProfesor, int idRedSocial) {
 		List<Object[]> objects = getSession().createQuery(
 				"from ProfesorRedesSociales prs join prs.redes rs join prs.profesor p where rs.id_red_social= :id_red_social and p.id_profesor = :id_profesor")
 				.setParameter("id_red_social",idRedSocial)
