@@ -30,9 +30,9 @@ public class DataBaseConfiguration {
 	public DataSource dataSource(){
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/sistema_profesores");
-		dataSource.setUsername("postgres");
-		dataSource.setPassword("admin");
+		dataSource.setUrl("jdbc:postgresql://ec2-54-243-193-59.compute-1.amazonaws.com:5432/dacfpr5mol7nk4");
+		dataSource.setUsername("qcejkcuyprajuj");
+		dataSource.setPassword("3396cb669d51a5db92fd4c16545d3149f59f7a6b78e1e084a5173ea7ae8d0d3a");
 		/*dataSource.setDriverClassName("com.mysql.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/sistema_profesores");
 		dataSource.setUsername("sistema_profesores");
